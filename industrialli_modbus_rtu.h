@@ -45,21 +45,85 @@ static char auchCRCLo[] = {
     0x40
 };
 
+enum function_code {
+    FC_READ_COILS               = 0x01,//
+    FC_READ_INPUT_COILS         = 0x02,//
+    FC_READ_HOLDING_REGISTERS   = 0x03,//
+    FC_READ_INPUT_REGISTERS     = 0x04,//
+    FC_WRITE_SINGLE_COIL        = 0x05,//
+    FC_WRITE_SINGLE_REGISTER    = 0x06,//
+    FC_WRITE_MULTIPLE_COILS     = 0x0F,//
+    FC_WRITE_MULTIPLE_REGISTERS = 0x10//
+};
+
+enum exception_code {
+    EX_ILLEGAL_FUNCTION = 0x01,
+    EX_ILLEGAL_ADDRESS  = 0x02,
+    EX_ILLEGAL_VALUE    = 0x03,
+    EX_SLAVE_FAILURE    = 0x04,
+};
+
+typedef struct Register {
+    uint16_t address;
+    uint16_t value;
+    struct Register* next;
+} Register;
+
 class IndustrialliModbusRTU{
-public:
-    uint8_t *frame;
-    uint8_t framesize;
+private:
+    uint8_t client_address;
 
     HardwareSerial *serial;
+    uint16_t t15;
+    uint16_t t35;
 
-    uint8_t t15;
-    uint8_t t35;
+    uint8_t frame[256];
+    uint8_t frame_size;
 
+    Register *registers_head;
+    Register *registers_last;
 
-    void begin(HardwareSerial *_serial);
-    void send(uint8_t _address, uint8_t *_pdu, int _pdusize);
-    void receive(uint8_t *_frame, int _framesize);
+    void create_register(uint16_t _address, uint16_t _value);
+    void set_register(uint16_t _address, uint16_t _value);
+    uint16_t get_register(uint16_t _address);
+    Register* search_register(uint16_t _address);
+    
+    void read_coils(uint16_t _start_address, uint16_t _n_coils);
+    void read_input_coils(uint16_t _start_address, uint16_t _n_coils);
+    void read_holding_register(uint16_t _start_address, uint16_t _n_registers);
+    void read_input_register(uint16_t _start_address, uint16_t _n_registers);
+    void write_single_coil(uint16_t _address, uint16_t _value);
+    void write_single_register(uint16_t _address, uint16_t _value);
+    void write_multiple_coils(uint16_t _start_address, uint16_t _n_coils);
+    void write_multiple_registers(uint16_t _start_address, uint16_t _n_registers, uint8_t byte_count);
+    
     uint16_t crc(uint8_t _address, uint8_t *_pdu, int _pdusize);
+
+public:
+    void begin(HardwareSerial *_serial);
+
+    void set_slave_id(uint8_t _address);
+    uint8_t get_slave_id();
+    
+    void task();
+    bool receive_frame();
+    void process_frame();
+    void send_frame(uint8_t _address, uint8_t *_pdu, int _pdusize);
+
+    void create_status_coil(uint16_t _address, bool _value);
+    void create_input_coil(uint16_t _address, bool _value);
+    void create_input_register(uint16_t _address, uint16_t _value);
+    void create_holding_register(uint16_t _address, uint16_t _value);
+
+    void set_status_coil(uint16_t _address, bool _value);
+    void set_input_coil(uint16_t _address, bool _value);
+    void set_input_register(uint16_t _address, uint16_t _value);
+    void set_holding_register(uint16_t _address, uint16_t _value);
+
+    bool get_status_coil(uint16_t _address);
+    bool get_input_coil(uint16_t _address);
+    uint16_t get_input_register(uint16_t _address);
+    uint16_t get_holding_register(uint16_t _address);
 };
 
 #endif
