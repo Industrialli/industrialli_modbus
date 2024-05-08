@@ -45,10 +45,10 @@ Industrialli_Modbus_RTU_Client : write_multiple_registers()
 sequenceDiagram
 participant Cliente
 participant Servidor
-Cliente->>Servidor: envia requisição
+Cliente->>+Servidor: envia requisição
 Servidor->>Servidor: recebe requisição
 Servidor->>Servidor: processa requisição
-Servidor->>Cliente: envia resposta
+Servidor->>-Cliente: envia resposta
 Cliente->>Cliente: recebe resposta
 Cliente->>Cliente: processa resposta
     
