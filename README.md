@@ -40,20 +40,6 @@ Industrialli_Modbus_RTU_Client : write_multiple_registers()
 
 ```
 
-## Fluxograma
-```mermaid
-sequenceDiagram
-participant Cliente
-participant Servidor
-Cliente->>+Servidor: envia requisição
-Servidor->>Servidor: recebe requisição
-Servidor->>Servidor: processa requisição
-Servidor->>-Cliente: envia resposta
-Cliente->>Cliente: recebe resposta
-Cliente->>Cliente: processa resposta
-    
-```
-
 ## Exemplo
 O Cliente gera uma configuração aleatória dos leds na Hub e manda uma requisição write_multiple_registers com as configurações dos leds para o servidor. O servidor ira receber a requisição e atualizar as configurações dos seus leds conforme a requisição do cliente e enviar uma resposta.
 
