@@ -43,15 +43,14 @@ Industrialli_Modbus_RTU_Client : write_multiple_registers()
 ## Fluxograma
 ```mermaid
 sequenceDiagram
-    participant Cliente
-    participant Servidor
-    loop
-        Cliente->>Servidor: envia requisição
-        Servidor->>Servidor: processa requisição
-        Servidor->>Cliente: envia resposta
-        Cliente->>Cliente: recebe resposta
-        Cliente->>Cliente: processa resposta
-    end
+participant Cliente
+participant Servidor
+Cliente->>Servidor: envia requisição
+Servidor->>Servidor: recebe requisição
+Servidor->>Servidor: processa requisição
+Servidor->>Cliente: envia resposta
+Cliente->>Cliente: recebe resposta
+Cliente->>Cliente: processa resposta
     
 ```
 
