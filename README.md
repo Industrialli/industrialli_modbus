@@ -1,6 +1,59 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 # Modbus-RTU
+Modbus é um dos protocolos de comunicação mais amplamente utilizados na automação industrial. Desenvolvido na década de 1970 pela Modicon, agora parte da Schneider Electric, o Modbus oferece uma estrutura simples e robusta para a troca de dados entre dispositivos em um ambiente industrial. Uma de suas variantes mais comuns é o Modbus RTU (Remote Terminal Unit), uma implementação serial do protocolo que utiliza a transmissão de dados em formato binário. Essa versão é especialmente popular em sistemas que exigem comunicação confiável e eficiente entre dispositivos em distâncias moderadas. Nesta introdução, exploraremos os princípios básicos do Modbus e suas características-chave, com foco específico no Modbus RTU e seu papel essencial na automação industrial.
+
+## Diagrama de classes
+
+```mermaid
+classDiagram
+Industrialli_Modbus <|-- Industrialli_Modbus_RTU_Server
+Industrialli_Modbus <|-- Industrialli_Modbus_RTU_Client
+Industrialli_Modbus : create_status_coil()
+Industrialli_Modbus : create_input_coil()
+Industrialli_Modbus : create_input_register()
+Industrialli_Modbus : create_holding_register()
+Industrialli_Modbus : set_status_coil()
+Industrialli_Modbus : set_input_coil()
+Industrialli_Modbus : set_input_register()
+Industrialli_Modbus : set_holding_register()
+Industrialli_Modbus : get_status_coil()
+Industrialli_Modbus : get_input_coil()
+Industrialli_Modbus : get_input_register()
+Industrialli_Modbus : get_holding_register()
+
+Industrialli_Modbus_RTU_Server : begin()
+Industrialli_Modbus_RTU_Server : set_server_address()
+Industrialli_Modbus_RTU_Server : get_server_address()
+Industrialli_Modbus_RTU_Server : task()
+
+
+Industrialli_Modbus_RTU_Client : begin()
+Industrialli_Modbus_RTU_Client : read_coils()
+Industrialli_Modbus_RTU_Client : read_input_coils()
+Industrialli_Modbus_RTU_Client : read_holding_registers()
+Industrialli_Modbus_RTU_Client : read_input_registers()
+Industrialli_Modbus_RTU_Client : write_single_coil()
+Industrialli_Modbus_RTU_Client : write_single_register()
+Industrialli_Modbus_RTU_Client : write_multiple_coils()
+Industrialli_Modbus_RTU_Client : write_multiple_registers()
+
+```
+
+## Fluxograma
+```mermaid
+sequenceDiagram
+    participant Alice
+    participant Bob
+    Alice->>John: Hello John, how are you?
+    loop HealthCheck
+        John->>John: Fight against hypochondria
+    end
+    Note right of John: Rational thoughts <br/>prevail!
+    John-->>Alice: Great!
+    John->>Bob: How about you?
+    Bob-->>John: Jolly good!
+```
 
 ### Funções
 
