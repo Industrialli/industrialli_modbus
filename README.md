@@ -55,9 +55,97 @@ sequenceDiagram
     
 ```
 
-### Funções
+## Exemplo
 
-Segue abaixo as funções genéricas do protocolo Modbus para gerenciamento de registradores.
+### Servidor
+```cpp
+#include <Arduino.h>
+#include <HardwareSerial.h>
+
+#include "industrialli_hubInit.h"
+#include "industrialli_ledsHub.h"
+#include "modbus/industrialli_modbus_rtu_server.h"
+
+#define RS485_USART2_RX PD6
+#define RS485_USART2_TX PD5
+#define RS485_USART2_RE_DE PD4
+
+industrialli_hubInit startHub;
+industrialli_ledsHubCtrl ledsCtrl;
+HardwareSerial rs485_usart2_serial(RS485_USART2_RX, RS485_USART2_TX);
+Industrialli_Modbus_RTU_Server modbus;
+
+void setup(){
+	startHub.begin();
+	rs485_usart2_serial.begin(9600);
+	SerialUSB.begin(9600);
+
+	modbus.begin(&rs485_usart2_serial);
+	modbus.set_server_address(10);
+
+	for (int i = 0; i < 32; i++){
+		modbus.create_status_coil(i, LOW);
+	}
+
+	ledsCtrl.begin();
+}
+
+void loop() {
+	modbus.task();
+
+	for (int i = 0; i < 32; i++){
+		ledsCtrl._shiftRegisterLed[i] = modbus.get_status_coil(i);
+	}
+
+	ledsCtrl.ledsUpdate();
+}
+```
+
+### Cliente
+```cpp
+#include <Arduino.h>
+#include <HardwareSerial.h>
+
+#include "industrialli_hubInit.h"
+#include "industrialli_ledsHub.h"
+#include "modbus/industrialli_modbus_rtu_client.h"
+
+#define RS485_USART2_RX PD6
+#define RS485_USART2_TX PD5
+#define RS485_USART2_RE_DE PD4
+
+industrialli_hubInit startHub;
+industrialli_ledsHubCtrl ledsCtrl;
+HardwareSerial rs485_usart2_serial(RS485_USART2_RX, RS485_USART2_TX);
+Industrialli_Modbus_RTU_Client modbus;
+
+void setup(){
+	startHub.begin();
+	rs485_usart2_serial.begin(9600);
+
+	modbus.begin(&rs485_usart2_serial);
+
+	pinMode(RS485_USART2_RE_DE, OUTPUT);
+	digitalWrite(RS485_USART2_RE_DE, HIGH);
+
+	ledsCtrl.begin();
+}
+
+void loop() {
+	for (int i = 0; i < 32; i++){
+		ledsCtrl._shiftRegisterLed[i] = rand() % 2;
+	}
+
+	modbus.write_multiple_coils(10, 0, ledsCtrl._shiftRegisterLed, 32);
+	ledsCtrl.ledsUpdate();
+
+	delay(300);
+}
+```
+
+## Funções
+
+Segue abaixo as funções genéricas do protocolo Modbus para gerenciamento de registradores, referentes a classe Industrialli_Modbus.
 
 <details>
 <summary>create_status_coil</summary>
@@ -272,7 +360,7 @@ uint16_t value = modbus.get_holding_register(12);
 
 ### Funções
 
-Segue abaixo as funções específicas do servidor Modbus RTU.
+Segue abaixo as funções específicas do servidor Modbus RTU, referentes a classe Industrialli_Modbus_RTU_Server.
 
 <details>
 <summary>begin</summary>
@@ -336,7 +424,7 @@ void loop(){
 
 ### Funções
 
-Segue abaixo as funções específicas do cliente Modbus RTU.
+Segue abaixo as funções específicas do cliente Modbus RTU, referentes a classe Industrialli_Modbus_RTU_Client.
 
 <details>
 <summary>begin</summary>
