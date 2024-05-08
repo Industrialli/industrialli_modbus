@@ -2,6 +2,8 @@
 
 ### Funções
 
+Segue abaixo as funções genéricas do protocolo Modbus para gerenciamento de registradores.
+
 <details>
 <summary>create_status_coil</summary>
 
@@ -213,8 +215,27 @@ uint16_t value = modbus.get_holding_register(12);
 
 ## Servidor
 
+Segue abaixo as funções específicas do servidor Modbus RTU.
+
 ### Funções
-- begin
+
+<details>
+<summary>begin</summary>
+Inicializa um servidor Modbus RTU.
+
+**Parâmetros:**
+
+- HardwareSerial *_serial: endereço de memória referente a conexão serial.
+
+**Retorno:** void
+
+**Exemplo**
+```cpp
+rs485_usart2_serial.begin(9600);
+modbus.begin(&rs485_usart2_serial);
+```
+</details>
+
 - set_server_address
 - get_server_address
 - task
