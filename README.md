@@ -215,9 +215,9 @@ uint16_t value = modbus.get_holding_register(12);
 
 ## Servidor
 
-Segue abaixo as funções específicas do servidor Modbus RTU.
-
 ### Funções
+
+Segue abaixo as funções específicas do servidor Modbus RTU.
 
 <details>
 <summary>begin</summary>
@@ -236,13 +236,45 @@ modbus.begin(&rs485_usart2_serial);
 ```
 </details>
 
-- set_server_address
-- get_server_address
-- task
-- receive_request
-- process_request
-- send_normal_response
-- send_echo_response
+<details>
+<summary>set_server_address</summary>
+Define o endereço do servidor Modbus RTU.
+
+**Parâmetros:**
+
+- uint8_t _server_address: endereço do servidor.
+
+**Retorno:** void
+
+**Exemplo**
+```cpp
+modbus.set_server_address(10);
+```
+</details>
+
+<details>
+<summary>get_server_address</summary>
+Retorna o endereço do servidor Modbus RTU.
+
+**Parâmetros:** void
+
+**Retorno:** uint8_t _server_address: endereço do servidor.
+</details>
+
+<details>
+<summary>task</summary>
+Recebe, processa e responde um frame de requisição do cliente.
+
+**Parâmetros:** void
+
+**Retorno:** void
+
+**Exemplo**
+```cpp
+rs485_usart2_serial.begin(9600);
+modbus.begin(&rs485_usart2_serial);
+```
+</details>
 
 ## Cliente
 
