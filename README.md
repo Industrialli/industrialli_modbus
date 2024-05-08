@@ -18,7 +18,7 @@ O fluxo da comunicação entre cliente e servidor via modbus rtu é bastante sim
 </p>
 
 ## Exemplo
-O Cliente gera uma configuração aleatória dos leds na Hub e manda uma requisição write_multiple_registers com as configurações dos leds para o servidor. O servidor ira receber a requisição e atualizar as configurações dos seus leds conforme a requisição do cliente e enviar uma resposta.
+O Cliente gera uma configuração aleatória dos leds e envia uma requisição write_multiple_registers com as configurações dos leds para o servidor. O servidor ira receber a requisição e atualizar as configurações dos seus leds conforme a requisição do cliente e enviar uma resposta.
 
 
 ### Servidor
