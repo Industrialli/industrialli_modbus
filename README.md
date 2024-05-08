@@ -6,40 +6,16 @@ Modbus é um dos protocolos de comunicação mais amplamente utilizados na autom
 ## Diagrama de classes
 Diagrama de classe básico, contendo apenas os métodos públicos acessiveis ao usuário. As classes se encontram no diretório includes/ e seus métodos no diretório src/.
 
-```mermaid
-classDiagram
-Industrialli_Modbus <|-- Industrialli_Modbus_RTU_Server
-Industrialli_Modbus <|-- Industrialli_Modbus_RTU_Client
-Industrialli_Modbus : create_status_coil()
-Industrialli_Modbus : create_input_coil()
-Industrialli_Modbus : create_input_register()
-Industrialli_Modbus : create_holding_register()
-Industrialli_Modbus : set_status_coil()
-Industrialli_Modbus : set_input_coil()
-Industrialli_Modbus : set_input_register()
-Industrialli_Modbus : set_holding_register()
-Industrialli_Modbus : get_status_coil()
-Industrialli_Modbus : get_input_coil()
-Industrialli_Modbus : get_input_register()
-Industrialli_Modbus : get_holding_register()
+<p align="center">
+  <img src="https://github.com/Industrialli/Modbus-RTU/blob/main/class_diagram.png" />
+</p>
 
-Industrialli_Modbus_RTU_Server : begin()
-Industrialli_Modbus_RTU_Server : set_server_address()
-Industrialli_Modbus_RTU_Server : get_server_address()
-Industrialli_Modbus_RTU_Server : task()
+## Fluxograma
+O fluxo da comunicação entre cliente e servidor via modbus rtu é bastante simples. Basicamente o cliente, ao executar uma das seguintes funções modbus: read_coils, read_input_coils, read_holding_registers, read_input_registers, write_single_coil, write_single_register, write_multiple_coils e write_multiple_registers, ira enviar uma requisição para os servidores. Todos os servidores irão receber a mensagem através da função task(), está ira processar e responder somente se a requisição for destinada a ela.
 
-
-Industrialli_Modbus_RTU_Client : begin()
-Industrialli_Modbus_RTU_Client : read_coils()
-Industrialli_Modbus_RTU_Client : read_input_coils()
-Industrialli_Modbus_RTU_Client : read_holding_registers()
-Industrialli_Modbus_RTU_Client : read_input_registers()
-Industrialli_Modbus_RTU_Client : write_single_coil()
-Industrialli_Modbus_RTU_Client : write_single_register()
-Industrialli_Modbus_RTU_Client : write_multiple_coils()
-Industrialli_Modbus_RTU_Client : write_multiple_registers()
-
-```
+<p align="center">
+  <img src="https://github.com/Industrialli/Modbus-RTU/blob/main/flowchart.png" />
+</p>
 
 ## Exemplo
 O Cliente gera uma configuração aleatória dos leds na Hub e manda uma requisição write_multiple_registers com as configurações dos leds para o servidor. O servidor ira receber a requisição e atualizar as configurações dos seus leds conforme a requisição do cliente e enviar uma resposta.
