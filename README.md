@@ -17,6 +17,12 @@ O fluxo da comunicação entre cliente e servidor via modbus rtu é bastante sim
   <img src="https://github.com/Industrialli/Modbus-RTU/blob/main/sequence_diagram.png" />
 </p>
 
+## Diagrama de conexões
+
+<p align="center">
+  <img src="https://github.com/Industrialli/Modbus-RTU/blob/main/industrialli_hub_rs485.png" />
+</p>
+
 ## Exemplo
 O Cliente gera uma configuração aleatória dos leds e envia uma requisição write_multiple_registers com as configurações dos leds para o servidor. O servidor ira receber a requisição e atualizar as configurações dos seus leds conforme a requisição do cliente e enviar uma resposta.
 
