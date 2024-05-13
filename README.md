@@ -123,8 +123,8 @@ Segue abaixo as funções genéricas do protocolo Modbus para gerenciamento de r
 Inicializa um registrador do tipo coil.
 
 **Parâmetros:**
-- uint16_t index: index do coil. valores possiveis \[1, 10000\] 
-- bool: value: valor do coil. valores possiveis \[0, 1\]
+- uint16_t _address: endereço do coil.
+- bool: _value: valor do coil.
 
 **Retorno:** void
 
@@ -141,8 +141,8 @@ Inicializa um registrador do tipo discrete input coil.
 
 **Parâmetros:**
 
-- uint16_t index: index do coil.
-- bool: value: valor do coil.
+- uint16_t _address: endereço do coil.
+- bool: _value: valor do coil.
 
 **Retorno:** void
 
@@ -159,8 +159,8 @@ Inicializa um registrador do tipo input.
 
 **Parâmetros:**
 
-- uint16_t index: index do registrador.
-- uint16_t: value: valor do registrador.
+- uint16_t _address: endereço do registrador.
+- uint16_t: _value: valor do registrador.
 
 **Retorno:** void
 
@@ -177,8 +177,8 @@ Inicializa um registrador do tipo holding.
 
 **Parâmetros:**
 
-- uint16_t index: index do registrador.
-- uint16_t: value: valor do registrador.
+- uint16_t _address: endereço do registrador.
+- uint16_t: _value: valor do registrador.
 
 **Retorno:** void
 
@@ -194,8 +194,8 @@ Inicializa um registrador do tipo holding.
 Atualiza um registrador do tipo coil.
 
 **Parâmetros:**
-- uint16_t index: index do coil.
-- bool: value: valor do coil.
+- uint16_t _address: endereço do coil.
+- bool: _value: valor do coil.
 
 **Retorno:** void
 
@@ -212,8 +212,8 @@ Atualiza um registrador do tipo discrete input coil.
 
 **Parâmetros:**
 
-- uint16_t index: index do coil.
-- bool: value: valor do coil.
+- uint16_t _address: endereço do coil.
+- bool: _value: valor do coil.
 
 **Retorno:** void
 
@@ -230,8 +230,8 @@ Atualiza um registrador do tipo input.
 
 **Parâmetros:**
 
-- uint16_t index: index do registrador.
-- uint16_t: value: valor do registrador.
+- uint16_t _address: endereço do registrador.
+- uint16_t: _value: valor do registrador.
 
 **Retorno:** void
 
@@ -248,8 +248,8 @@ Atualiza um registrador do tipo holding.
 
 **Parâmetros:**
 
-- uint16_t index: index do registrador.
-- uint16_t: value: valor do registrador.
+- uint16_t _address: endereço do registrador.
+- uint16_t: _value: valor do registrador.
 
 **Retorno:** void
 
@@ -265,9 +265,9 @@ Atualiza um registrador do tipo holding.
 Retorna o valor de um registrador do tipo coil.
 
 **Parâmetros:**
-- uint16_t index: index do coil. valores possiveis \[1, 10000\] 
+- uint16_t _address: endereço do coil.
 
-**Retorno:** bool: value: valor do coil. valores possiveis \[0, 1\]
+**Retorno:** bool: valor do coil.
 
 **Exemplo**
 ```cpp
@@ -282,9 +282,9 @@ Retorna o valor de um registrador do tipo discrete input coil.
 
 **Parâmetros:**
 
-- uint16_t index: index do coil.
+- uint16_t _address: endereço do coil.
 
-**Retorno:** bool: value: valor do coil.
+**Retorno:** bool: valor do coil.
 
 **Exemplo**
 ```cpp
@@ -299,9 +299,9 @@ Retorna o valor de um registrador do tipo input.
 
 **Parâmetros:**
 
-- uint16_t index: index do registrador.
+- uint16_t _address: endereço do registrador.
 
-**Retorno:** uint16_t: value: valor do registrador.
+**Retorno:** uint16_t: valor do registrador.
 
 **Exemplo**
 ```cpp
@@ -316,9 +316,9 @@ Retorna o valor de um registrador do tipo holding.
 
 **Parâmetros:**
 
-- uint16_t index: index do registrador.
+- uint16_t _address: endereço do registrador.
 
-**Retorno:** uint16_t: value: valor do registrador.
+**Retorno:** uint16_t: valor do registrador.
 
 **Exemplo**
 ```cpp
@@ -339,13 +339,15 @@ Inicializa um servidor Modbus RTU.
 **Parâmetros:**
 
 - HardwareSerial *_serial: endereço de memória referente a conexão serial.
+- long _baud: frequência da comunicação serial.
+- int _de_pin: pino re/de.
 
 **Retorno:** void
 
 **Exemplo**
 ```cpp
 rs485_usart2_serial.begin(9600);
-modbus.begin(&rs485_usart2_serial);
+modbus.begin(&rs485_usart2_serial, 9600, RS485_USART2_RE_DE);
 ```
 </details>
 
@@ -403,13 +405,15 @@ Inicializa um cliente Modbus RTU.
 **Parâmetros:**
 
 - HardwareSerial *_serial: endereço de memória referente a conexão serial.
+- long _baud: frequência da comunicação serial.
+- int _de_pin: pino re/de.
 
 **Retorno:** void
 
 **Exemplo**
 ```cpp
 rs485_usart2_serial.begin(9600);
-modbus.begin(&rs485_usart2_serial);
+modbus.begin(&rs485_usart2_serial, 9600, RS485_USART2_RE_DE);
 ```
 </details>
 
