@@ -50,7 +50,7 @@ void setup(){
 	rs485_usart2_serial.begin(9600);
 	SerialUSB.begin(9600);
 
-	modbus.begin(&rs485_usart2_serial);
+	modbus.begin(&rs485_usart2_serial, 9600, RS485_USART2_RE_DE);
 	modbus.set_server_address(10);
 
 	for (int i = 0; i < 32; i++){
@@ -93,11 +93,9 @@ void setup(){
 	startHub.begin();
 	rs485_usart2_serial.begin(9600);
 
-	modbus.begin(&rs485_usart2_serial);
+	modbus.begin(&rs485_usart2_serial, 9600, RS485_USART2_RE_DE);
 
 	pinMode(RS485_USART2_RE_DE, OUTPUT);
-	digitalWrite(RS485_USART2_RE_DE, HIGH);
-
 	ledsCtrl.begin();
 }
 
