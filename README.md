@@ -1,6 +1,6 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-# Modbus-RTU
+# Modbus RTU
 Modbus é um dos protocolos de comunicação mais amplamente utilizados na automação industrial. Desenvolvido na década de 1970 pela Modicon, agora parte da Schneider Electric, o Modbus oferece uma estrutura simples e robusta para a troca de dados entre dispositivos em um ambiente industrial. Uma de suas variantes mais comuns é o Modbus RTU (Remote Terminal Unit), uma implementação serial do protocolo que utiliza a transmissão de dados em formato binário. Essa versão é especialmente popular em sistemas que exigem comunicação confiável e eficiente entre dispositivos em distâncias moderadas. Nesta introdução, exploraremos os princípios básicos do Modbus e suas características-chave, com foco específico no Modbus RTU e seu papel essencial na automação industrial.
 
 ## Diagrama de classe
