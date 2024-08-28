@@ -29,26 +29,10 @@ O Cliente gera uma configuração aleatória dos leds e envia uma requisição w
 
 ### Servidor
 ```cpp
-#include <Arduino.h>
-#include <HardwareSerial.h>
-
-#include "industrialli_hubInit.h"
-#include "industrialli_ledsHub.h"
-#include "modbus/industrialli_modbus_rtu_server.h"
-
-#define RS485_USART2_RX PD6
-#define RS485_USART2_TX PD5
-#define RS485_USART2_RE_DE PD4
-
-industrialli_hubInit startHub;
-industrialli_ledsHubCtrl ledsCtrl;
-HardwareSerial rs485_usart2_serial(RS485_USART2_RX, RS485_USART2_TX);
-Industrialli_Modbus_RTU_Server modbus;
+#include "industrialli_hub.hpp"
 
 void setup(){
-	startHub.begin();
-	rs485_usart2_serial.begin(9600);
-	SerialUSB.begin(9600);
+	hub.begin();
 
 	modbus.begin(&rs485_usart2_serial, 9600, RS485_USART2_RE_DE);
 	modbus.set_server_address(10);
@@ -56,56 +40,39 @@ void setup(){
 	for (int i = 0; i < 32; i++){
 		modbus.create_status_coil(i, LOW);
 	}
-
-	ledsCtrl.begin();
 }
 
 void loop() {
 	modbus.task();
 
 	for (int i = 0; i < 32; i++){
-		ledsCtrl._shiftRegisterLed[i] = modbus.get_status_coil(i);
+		leds.set_led(i, modbus.get_status_coil(i));
 	}
 
-	ledsCtrl.ledsUpdate();
+	leds.update();
 }
 ```
 
 ### Cliente
 ```cpp
-#include <Arduino.h>
-#include <HardwareSerial.h>
-
-#include "industrialli_hubInit.h"
-#include "industrialli_ledsHub.h"
-#include "modbus/industrialli_modbus_rtu_client.h"
-
-#define RS485_USART2_RX PD6
-#define RS485_USART2_TX PD5
-#define RS485_USART2_RE_DE PD4
-
-industrialli_hubInit startHub;
-industrialli_ledsHubCtrl ledsCtrl;
-HardwareSerial rs485_usart2_serial(RS485_USART2_RX, RS485_USART2_TX);
-Industrialli_Modbus_RTU_Client modbus;
+#include "industrialli_hub.hpp"
 
 void setup(){
-	startHub.begin();
-	rs485_usart2_serial.begin(9600);
+	hub.begin();
 
 	modbus.begin(&rs485_usart2_serial, 9600, RS485_USART2_RE_DE);
 
 	pinMode(RS485_USART2_RE_DE, OUTPUT);
-	ledsCtrl.begin();
+	leds.begin();
 }
 
 void loop() {
 	for (int i = 0; i < 32; i++){
-		ledsCtrl._shiftRegisterLed[i] = rand() % 2;
+		leds.set_led(i, rand() % 2);
 	}
 
 	modbus.write_multiple_coils(10, 0, ledsCtrl._shiftRegisterLed, 32);
-	ledsCtrl.ledsUpdate();
+	leds.update();
 
 	delay(300);
 }
