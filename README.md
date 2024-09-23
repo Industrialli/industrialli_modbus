@@ -34,19 +34,19 @@ O Cliente gera uma configuração aleatória dos leds e envia uma requisição w
 void setup(){
 	hub.begin();
 
-	modbus.begin(&rs485_usart2_serial, 9600, RS485_USART2_RE_DE);
-	modbus.set_server_address(10);
+	modbus_server.begin(&modbus_serial);
+	modbus_server.set_server_address(10);
 
 	for (int i = 0; i < 32; i++){
-		modbus.create_status_coil(i, LOW);
+		modbus_server.create_status_coil(i, LOW);
 	}
 }
 
 void loop() {
-	modbus.task();
+	modbus_server.task();
 
 	for (int i = 0; i < 32; i++){
-		leds.set_led(i, modbus.get_status_coil(i));
+		leds.set_led(i, modbus_server.get_status_coil(i));
 	}
 
 	leds.update();
@@ -60,9 +60,8 @@ void loop() {
 void setup(){
 	hub.begin();
 
-	modbus.begin(&rs485_usart2_serial, 9600, RS485_USART2_RE_DE);
+	modbus_client.begin(&modbus_serial);
 
-	pinMode(RS485_USART2_RE_DE, OUTPUT);
 	leds.begin();
 }
 
@@ -71,7 +70,7 @@ void loop() {
 		leds.set_led(i, rand() % 2);
 	}
 
-	modbus.write_multiple_coils(10, 0, ledsCtrl._shiftRegisterLed, 32);
+	modbus_client.write_multiple_coils(10, 0, leds.leds, 32);
 	leds.update();
 
 	delay(300);
