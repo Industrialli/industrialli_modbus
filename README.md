@@ -11,7 +11,7 @@ Diagrama de classe básico, contendo apenas os métodos públicos acessiveis ao 
 </p>
 
 ## Diagrama de sequência
-O fluxo da comunicação entre cliente e servidor via modbus rtu é bastante simples. Basicamente o cliente, ao executar uma das seguintes funções modbus: read_coils, read_input_coils, read_holding_registers, read_input_registers, write_single_coil, write_single_register, write_multiple_coils e write_multiple_registers, ira enviar uma requisição para os servidores. Todos os servidores irão receber a mensagem através da função task(), está ira processar e responder somente se a requisição for destinada a ela.
+O fluxo da comunicação entre cliente e servidor via modbus é bastante simples. Basicamente o cliente, ao executar uma das seguintes funções modbus: read_coils, read_input_coils, read_holding_registers, read_input_registers, write_single_coil, write_single_register, write_multiple_coils e write_multiple_registers, ira enviar uma requisição para os servidores. Todos os servidores irão receber a mensagem através da função task(), está ira processar e responder somente se a requisição for destinada a ela.
 
 <p align="center">
   <img src="https://github.com/Industrialli/industrialli_modbus/blob/Arduino/sequence_diagram.png" />
