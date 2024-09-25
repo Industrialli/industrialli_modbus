@@ -5,6 +5,6 @@ Modbus é um dos protocolos de comunicação mais amplamente utilizados na autom
 Está biblioteca fornece a implementação do cliente e servidor para o protocolo Modbus RTU e TCP.
 
 > [!IMPORTANT]
-> **Documentação da Industrialli Modbus [🔗](https://github.com/Industrialli/industrialli_modbus/wiki).**<br>
+> **Documentação da Industrialli Modbus [📖](https://github.com/Industrialli/industrialli_modbus/wiki).**<br>
 > Documentação oficial do protocolo modbus rtu [🔗](https://modbus.org/docs/Modbus_Application_Protocol_V1_1b.pdf).<br>
 > Documentação oficial do protocolo modbus tcp [🔗](https://www.modbus.org/docs/Modbus_Messaging_Implementation_Guide_V1_0b.pdf).
